@@ -4,7 +4,7 @@
     "noImplicitAny": true,
     "module": "ESNext",
     "target": "es5",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "allowJs": true,
     "moduleResolution": "node",
     // если библиотека не имеет default export, то лоадеры автоматичеси их создают, т.е вместо import * as React from 'react' =>  import  React from 'react'
