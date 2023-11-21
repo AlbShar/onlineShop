@@ -7,13 +7,15 @@ export default (env: EnvType) => {
   const pathEntryPoint = path.resolve(__dirname, "src", "index.tsx");
   const pathOutputPoint = path.resolve(__dirname, "build");
   const pathIndexFile = path.resolve(__dirname, "public", "index.html");
+  const srcPath = path.resolve(__dirname, 'src');
   const optionsWebpack = {
     pathEntryPoint,
     mode: env.mode ?? 'development',
     port: env.port ?? 5000,
     pathOutputPoint,
     pathIndexFile,
-    isAnalyzer: env.isAnalyzer
+    isAnalyzer: env.isAnalyzer,
+    srcPath,
   };
   const config: webpack.Configuration = getWebpackConfig(optionsWebpack);
 

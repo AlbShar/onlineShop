@@ -1,6 +1,6 @@
-import { App } from "./components/App";
-import { Shop } from "./pages/shop";
-import { About } from "./pages/about";
+import { App } from "@/components/App";
+import { Shop } from "@/pages/shop";
+import { About } from "@/pages/about";
 import ReactDOM from "react-dom/client";
 import {
   createBrowserRouter,

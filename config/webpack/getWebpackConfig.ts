@@ -5,7 +5,7 @@ import type { OptionsWebpack } from "../../types/webpack/types";
 
 
 export const getWebpackConfig = (optionsWebpack: OptionsWebpack) => {
-    const {mode, port, pathEntryPoint, pathOutputPoint, pathIndexFile} = optionsWebpack;
+    const {mode, port, pathEntryPoint, pathOutputPoint, srcPath} = optionsWebpack;
     let isDev = mode === 'development' ;
  
     return {
@@ -30,6 +30,9 @@ export const getWebpackConfig = (optionsWebpack: OptionsWebpack) => {
         resolve: {
           // указывается список расширений которые мы можем использовать в наших файлах
           extensions: [".tsx", ".ts", ".js"],
+          alias: {
+            '@': srcPath,
+          },
         },
         devServer: isDev
           ? getDevServer(port) : undefined

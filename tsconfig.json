@@ -10,7 +10,11 @@
     // если библиотека не имеет default export, то лоадеры автоматичеси их создают, т.е вместо import * as React from 'react' =>  import  React from 'react'
     "allowSyntheticDefaultImports": true,
     // позволяет работать с пакетами, которые используют common js, как с обычными пакетами через import
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": ".", 
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "ts-node": {
     "compilerOptions": {

@@ -14,6 +14,7 @@ export type OptionsWebpack = {
   port: number;
   pathOutputPoint: string;
   pathIndexFile: string;
-  isAnalyzer?: boolean
+  isAnalyzer?: boolean;
+  srcPath: string
 };
 
