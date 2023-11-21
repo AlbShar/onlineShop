@@ -4,6 +4,8 @@ type Mode = "production" | "development";
 export type EnvType = {
   mode: Mode;
   port: number;
+  isAnalyzer?: boolean
+
 };
 
 export type OptionsWebpack = {
@@ -12,5 +14,6 @@ export type OptionsWebpack = {
   port: number;
   pathOutputPoint: string;
   pathIndexFile: string;
+  isAnalyzer?: boolean
 };
 

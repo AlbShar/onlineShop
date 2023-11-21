@@ -1,0 +1,1 @@
+export {AboutLazy as About} from "./aboutLazy";

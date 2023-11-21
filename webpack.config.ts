@@ -13,6 +13,7 @@ export default (env: EnvType) => {
     port: env.port ?? 5000,
     pathOutputPoint,
     pathIndexFile,
+    isAnalyzer: env.isAnalyzer
   };
   const config: webpack.Configuration = getWebpackConfig(optionsWebpack);
 
