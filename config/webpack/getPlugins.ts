@@ -1,11 +1,11 @@
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import webpack from "webpack";
+import webpack, {Configuration} from "webpack";
 import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer';
-
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import type { OptionsWebpack } from "../../types/webpack/types";
 
-export const getPlugins = (optionsWebpack: OptionsWebpack) => {
+export const getPlugins = (optionsWebpack: OptionsWebpack): Configuration['plugins'] => {
   const {mode, isAnalyzer, pathIndexFile} = optionsWebpack;
   let isDev = mode === 'development' ;
   let isProd = mode === 'production' ;
@@ -19,6 +19,8 @@ export const getPlugins = (optionsWebpack: OptionsWebpack) => {
          filename: 'styles/styles[contenthash].css'
         }),
         isDev && new webpack.ProgressPlugin() ,
-        (isProd && isAnalyzer) && new BundleAnalyzerPlugin()
+        (isProd && isAnalyzer) && new BundleAnalyzerPlugin(),
+        // этот плагин выносит в отдельный поток проверку типов TS, тем самым уменьшая время сборки webpack
+        isDev ? new ForkTsCheckerWebpackPlugin() : undefined
       ].filter(Boolean)
 }
