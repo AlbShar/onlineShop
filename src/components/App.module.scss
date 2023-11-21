@@ -1,7 +1,12 @@
-div {
+.block {
     background-color: green;
     padding: 10px;
     color: white;
     font-family: 'Courier New', Courier, monospace;
     border-radius: 10px;
+}
+
+.greeting {
+    color: red;
+    font-size: 20px;
 }

@@ -1,8 +1,8 @@
 import type { EnvType } from "../../types/webpack/types";
 
-export const getDevServer = (env: EnvType) => {
+export const getDevServer = (port: EnvType['port']) => {
     return {
-        port: env.port ?? 3000,
+        port: port,
         open: true,
       }
 }

@@ -1,9 +1,5 @@
 type Mode = "production" | "development";
-type Paths = {
-  pathEntryPoint: string;
-  pathOutputPoint: string;
-  pathIndexFile: string;
-};
+
 
 export type EnvType = {
   mode: Mode;
@@ -11,5 +7,10 @@ export type EnvType = {
 };
 
 export type OptionsWebpack = {
-  env: EnvType;
-} & Paths;
+  pathEntryPoint: string;
+  mode: EnvType['mode']; 
+  port: number;
+  pathOutputPoint: string;
+  pathIndexFile: string;
+};
+

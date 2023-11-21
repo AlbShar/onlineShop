@@ -1,8 +1,14 @@
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import webpack from "webpack";
+import type { OptionsWebpack } from "../../types/webpack/types";
 
-export const getPlugins = (isDev: boolean, isProd: boolean, pathIndexFile: string) => {
+
+export const getPlugins = (optionsWebpack: OptionsWebpack) => {
+  const {mode, port, pathIndexFile} = optionsWebpack;
+  let isDev = mode === 'development' ;
+
+
     return [
         new HtmlWebpackPlugin({
           template: pathIndexFile,

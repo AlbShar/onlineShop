@@ -5,13 +5,12 @@ import type { OptionsWebpack } from "../../types/webpack/types";
 
 
 export const getWebpackConfig = (optionsWebpack: OptionsWebpack) => {
-    const {env, pathEntryPoint, pathOutputPoint, pathIndexFile} = optionsWebpack;
-    const isDev = env.mode === 'development' ;
-    const isProd = env.mode === 'production' ;
+    const {mode, port, pathEntryPoint, pathOutputPoint, pathIndexFile} = optionsWebpack;
+    let isDev = mode === 'development' ;
  
     return {
         // динамический режим сборки
-        mode: env.mode ?? "development",
+        mode: mode,
         // точка входа
         entry: pathEntryPoint,
         // карта исходного кода, чтобы мы знали где у нас ошибка в коде
@@ -24,16 +23,16 @@ export const getWebpackConfig = (optionsWebpack: OptionsWebpack) => {
           clean: true,
         },
         // свойство template нужно чтобы в папке build в index.html содержалось все тоже самое что и в public, иначе будет дефолтный index.html
-        plugins: getPlugins(isDev, isProd, pathIndexFile),
+        plugins: getPlugins(optionsWebpack),
         module: {
-          rules: getLoaders(isDev)
+          rules: getLoaders(optionsWebpack)
         },
         resolve: {
           // указывается список расширений которые мы можем использовать в наших файлах
           extensions: [".tsx", ".ts", ".js"],
         },
         devServer: isDev
-          ? getDevServer(env) : undefined
+          ? getDevServer(port) : undefined
           
       };
 }
