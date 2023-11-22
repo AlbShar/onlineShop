@@ -1,4 +1,5 @@
 import {ModuleOptions} from "webpack";
+import path from "path";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import ReactRefreshTypeScript from 'react-refresh-typescript';
 
@@ -11,6 +12,9 @@ export const getLoaders = (optionsWebpack: OptionsWebpack): ModuleOptions['rules
   const assetsLoader = {
     test: /\.(png|jpg|jpeg|gif)$/i,
     type: "asset/resource",
+    generator: {
+      outputPath: 'assets/imgs',
+    },
   };
   const cssLoaderWithModules = {
     loader: "css-loader",
@@ -47,6 +51,9 @@ export const getLoaders = (optionsWebpack: OptionsWebpack): ModuleOptions['rules
         },
       },
     ],
+    generator: {
+      outputPath: 'js',
+    },
     // указываем что не обрабатываем
     exclude: /node_modules/,
   };

@@ -8,6 +8,7 @@ export default (env: EnvType) => {
   const pathOutputPoint = path.resolve(__dirname, "build");
   const pathIndexFile = path.resolve(__dirname, "public", "index.html");
   const srcPath = path.resolve(__dirname, 'src');
+  const publicPath = path.resolve(__dirname, "public");
   const optionsWebpack = {
     pathEntryPoint,
     mode: env.mode ?? 'development',
@@ -16,6 +17,7 @@ export default (env: EnvType) => {
     pathIndexFile,
     isAnalyzer: env.isAnalyzer,
     srcPath,
+    publicPath
   };
   const config: webpack.Configuration = getWebpackConfig(optionsWebpack);
 
