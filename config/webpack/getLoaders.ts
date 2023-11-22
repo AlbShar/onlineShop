@@ -1,5 +1,7 @@
 import {ModuleOptions} from "webpack";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import ReactRefreshTypeScript from 'react-refresh-typescript';
+
 import type { OptionsWebpack } from "../../types/webpack/types";
 
 export const getLoaders = (optionsWebpack: OptionsWebpack): ModuleOptions['rules'] => {
@@ -39,6 +41,9 @@ export const getLoaders = (optionsWebpack: OptionsWebpack): ModuleOptions['rules
         loader: "ts-loader",
         options: {
           transpileOnly: isDev ? true : false,
+          getCustomTransformers: () => ({
+            before: [isDev && ReactRefreshTypeScript()].filter(Boolean),
+          }),
         },
       },
     ],
