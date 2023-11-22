@@ -1,6 +1,8 @@
-import type { EnvType } from "../../types/webpack/types";
+import path from "path";
+import type { OptionsWebpack } from "../../types/webpack/types";
 
-export const getDevServer = (port: EnvType['port']) => {
+export const getDevServer = (optionsWebpack: OptionsWebpack) => {
+  const {port, pathOutputPoint} = optionsWebpack;
     return {
         port: port,
         open: true,

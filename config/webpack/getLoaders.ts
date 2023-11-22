@@ -1,20 +1,20 @@
-import {ModuleOptions} from "webpack";
+import { ModuleOptions } from "webpack";
 import path from "path";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import ReactRefreshTypeScript from 'react-refresh-typescript';
+import ReactRefreshTypeScript from "react-refresh-typescript";
 
 import type { OptionsWebpack } from "../../types/webpack/types";
 
-export const getLoaders = (optionsWebpack: OptionsWebpack): ModuleOptions['rules'] => {
+export const getLoaders = (
+  optionsWebpack: OptionsWebpack
+): ModuleOptions["rules"] => {
   const { mode } = optionsWebpack;
   const isDev = mode === "development";
 
   const assetsLoader = {
     test: /\.(png|jpg|jpeg|gif)$/i,
     type: "asset/resource",
-    generator: {
-      outputPath: 'assets/imgs',
-    },
+    
   };
   const cssLoaderWithModules = {
     loader: "css-loader",
@@ -52,7 +52,7 @@ export const getLoaders = (optionsWebpack: OptionsWebpack): ModuleOptions['rules
       },
     ],
     generator: {
-      outputPath: 'js',
+      outputPath: "js",
     },
     // указываем что не обрабатываем
     exclude: /node_modules/,
@@ -61,6 +61,24 @@ export const getLoaders = (optionsWebpack: OptionsWebpack): ModuleOptions['rules
     test: /\.svg$/i,
     use: [{ loader: "@svgr/webpack", options: { icon: true } }],
   };
+  const babelLoader = {
+    test: /\.tsx?$/,
+    exclude: /node_modules/,
+    use: {
+      loader: "babel-loader",
+      options: {
+        presets: [
+          "@babel/preset-env",
+          "@babel/preset-typescript",
+          ["@babel/preset-react",
+          
+          {
+            runtime: "automatic",
+          },]
+        ],
+      },
+    },
+  };
 
-  return [sassLoader, tsLoader, assetsLoader, svgLoader];
+  return [sassLoader, babelLoader, assetsLoader, svgLoader];
 };

@@ -20,6 +20,7 @@ export const getWebpackConfig = (optionsWebpack: OptionsWebpack) => {
           path: pathOutputPoint,
           // динамическое название выходного файла, которое меняется когда меняется код
           filename: "js/[name].[contenthash].js",
+          assetModuleFilename: 'assets/[hash].[ext]',
           clean: true,
         },
         // свойство template нужно чтобы в папке build в index.html содержалось все тоже самое что и в public, иначе будет дефолтный index.html
@@ -35,7 +36,7 @@ export const getWebpackConfig = (optionsWebpack: OptionsWebpack) => {
           },
         },
         devServer: isDev
-          ? getDevServer(port) : undefined
+          ? getDevServer(optionsWebpack) : undefined
           
       };
 }
