@@ -1,10 +1,7 @@
 
-# dependencies
-/node_modules
+/client/node_modules
+/client/build
+/client/.env
 
-
-# production
-/build
-
-# api keys
-.env
+/server/node_modules
+/server/.env

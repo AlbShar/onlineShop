@@ -4,8 +4,8 @@ import { getWebpackConfig } from "./config/webpack/getWebpackConfig";
 import { EnvType } from "./types/webpack/types";
 
 export default (env: EnvType) => {
-  const pathEntryPoint = path.resolve(__dirname, "src", "index.tsx");
-  const pathOutputPoint = path.resolve(__dirname, "build");
+  const pathEntryPoint = path.resolve(__dirname,  "src", "index.tsx");
+  const pathOutputPoint = path.resolve(__dirname,  "build");
   const pathIndexFile = path.resolve(__dirname, "public", "index.html");
   const srcPath = path.resolve(__dirname, 'src');
   const publicPath = path.resolve(__dirname, "public");
