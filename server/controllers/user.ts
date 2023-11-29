@@ -1,22 +1,13 @@
 import { ApiError } from "../error/apiError";
 const { User, Basket } = require("../models/models");
 const bscrypt = require("bcrypt");
-const jsonWebToken = require("jsonwebtoken");
+const generateJWT = require("../helpers/generateJWT");
 
-const generateJWT = (userId, email, role) => {
-    return jsonWebToken.sign(
-        {
-          id: userId,
-          email,
-          role,
-        },
-        process.env.SECRET_KEY,
-        { expiresIn: "24h" }
-      );
-};
+import type { Request, Response, NextFunction } from "express";
+
 
 class UserController {
-  async registration(req, res) {
+  async registration(req: Request, res: Response) {
     const { email, password, role } = req.body;
 
     const candidate = await User.findOne({ where: { email } });
@@ -27,12 +18,12 @@ class UserController {
     const hash = await bscrypt.hash(password, 5);
     const user = await User.create({ email, password: hash });
     const basket = await Basket.create({ userId: user.Id });
-    const token = generateJWT(user.id, email, user.role );
+    const token = generateJWT({userId: user.id, email, role: user.role});
 
     return res.json({ token });
   }
 
-  async login(req, res, next) {
+  async login(req: Request, res: Response, next: NextFunction) {
     const {email, password} = req.body;
     const user = await User.findOne({where: {email}});
 
@@ -51,7 +42,7 @@ class UserController {
 
   }
 
-  async checkAuth(req, res, next) {
+  async checkAuth(req: Request, res: Response, next: NextFunction) {
     const query = req.query;
 
     if (!query.id) {
