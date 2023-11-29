@@ -38,8 +38,8 @@ const start = async () => {
     // подлключение к БД
     await sequelize.authenticate();
     // сравнивает состояние БД со схемой данных 
-    await sequelize.sync();
-    app.listen(PORT, () => console.log(`Listening POT ${PORT}`))
+    await sequelize.sync({alter: true});
+    app.listen(PORT, () => console.log(`Listening P ${PORT}`))
    } catch (error) {
     console.log(error)
    } 
