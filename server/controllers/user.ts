@@ -19,7 +19,7 @@ class UserController {
     const hash = await bscrypt.hash(password, 5);
     const user = await User.create({ email, password: hash });
     const basket = await Basket.create({ userId: user.Id });
-    const token = generateJWT({userId: user.id, email, role: user.role});
+    const token = generateJWT({userId: user.id, email, role});
 
     return res.json({ token });
   }
