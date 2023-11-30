@@ -6,6 +6,13 @@ const bscrypt = require("bcrypt");
 
 import type { Request, Response, NextFunction } from "express";
 
+interface RequestUser extends Request {
+  user: {
+    id: number,
+    email: string,
+    role: string
+  }
+}
 
 class UserController {
   async registration(req: Request, res: Response) {
@@ -43,8 +50,9 @@ class UserController {
 
   }
 
-  async checkAuth(req: Request, res: Response) {
-    res.json({message: "Вы авторизованы"});
+  async checkAuth(req: RequestUser, res: Response) {
+    const token  = generateJWT({userId: req.user.id, email: req.user.email, role: req.user.role})
+    res.json({token});
   }
 }
 

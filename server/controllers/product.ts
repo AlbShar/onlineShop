@@ -1,20 +1,25 @@
 import { ApiError } from "../error/apiError";
-const { Product, Brand, ProductInfo, Type } = require("../models/models");
+const { Product, Brand, ProductInfo, Type, BasketProduct } = require("../models/models");
 const uuid = require("uuid");
 const path = require("path");
+const { Basket } = require("../models/models");
 
 import type { Request, Response, NextFunction } from "express";
 import type { Product } from "../types/types";
 
 interface MulterRequest extends Request {
   files: any;
+  user: {
+    id: number;
+    email: string;
+    role: string;
+  };
 }
-
 
 class ProductController {
   async create(req: MulterRequest, res: Response, next: NextFunction) {
     try {
-      let { name, price, volume, typeId, brandId, info} = req.body;
+      let { name, price, volume, typeId, brandId, info } = req.body;
       const { img } = req.files;
       const fileName = uuid.v4() + ".jpg";
       img.mv(path.resolve(__dirname, "..", "static", fileName));
@@ -33,7 +38,7 @@ class ProductController {
       if (info) {
         info = JSON.parse(info);
         console.log("info:", info); // Добавьте эту строку
-        info.forEach(i => {
+        info.forEach((i) => {
           console.log("product.id:", product.id); // Добавьте эту строку
           ProductInfo.create({
             productId: product.id,
@@ -44,17 +49,16 @@ class ProductController {
       }
 
       if (!existingBrand && !existingType) {
-        return next(ApiError.badRequest("Выбранные бренд и тип не существуют" ));
+        return next(ApiError.badRequest("Выбранные бренд и тип не существуют"));
       }
 
       if (!existingBrand) {
-        return next(ApiError.badRequest("Выбранный бренд не существует" ));
+        return next(ApiError.badRequest("Выбранный бренд не существует"));
       }
       if (!existingType) {
-        return next(ApiError.badRequest("Выбранный тип не существует" ));
+        return next(ApiError.badRequest("Выбранный тип не существует"));
       }
 
-      
       return res.json({ product });
     } catch (error) {
       next(ApiError.badRequest(error.message));
@@ -62,40 +66,79 @@ class ProductController {
   }
 
   async getAll(req: Request, res: Response) {
-    let {brandId, typeId, limit = 10, page = 1} = req.query;
+    let { brandId, typeId, limit = 10, page = 1 } = req.query;
     let products: Product[];
 
-
-    let offset = page as number  * (limit as number) - (limit as number);
+    let offset = (page as number) * (limit as number) - (limit as number);
 
     if (!brandId && !typeId) {
-      products = await Product.findAndCountAll({limit, offset});
+      products = await Product.findAndCountAll({ limit, offset });
     }
 
     if (!brandId && typeId) {
-      products = await Product.findAndCountAll({where:{typeId}, limit, offset});
-
+      products = await Product.findAndCountAll({
+        where: { typeId },
+        limit,
+        offset,
+      });
     }
 
     if (!typeId && brandId) {
-      products = await Product.findAndCountAll({where:{brandId}, limit, offset});
+      products = await Product.findAndCountAll({
+        where: { brandId },
+        limit,
+        offset,
+      });
     }
 
     if (brandId && typeId) {
-      products = await Product.findAndCountAll({where:{brandId, typeId}, limit, offset});
-
+      products = await Product.findAndCountAll({
+        where: { brandId, typeId },
+        limit,
+        offset,
+      });
     }
     return res.json(products);
   }
 
   async getOne(req: Request, res: Response) {
-    const {id} = req.params;
+    const { id } = req.params;
     const product = await Product.findOne({
-      where: {id},
-      include: [{model: ProductInfo, as: 'info'}]
+      where: { id },
+      include: [{ model: ProductInfo, as: "info" }],
     });
     return res.json(product);
+  }
 
+  async addToBasket(req: MulterRequest, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.body;
+      const { id: userId } = req.user;
+      const product = await Product.findByPk(id);
+      if (!product) {
+        return next(ApiError.badRequest(`Product with id ${id} not found`));
+      }
+      let basket = await Basket.findOne({ where: { userId } });
+
+      if (!basket) {
+        // Если корзины пользователя нет, создаем новую
+        basket = await Basket.create({ userId });
+      }
+
+      // Добавляем товар в корзину
+      const basketProduct = await BasketProduct.create({
+        basketId: basket.id,
+        productId: product.id,
+      });
+
+      return res.json({
+        message: "Product added to basket successfully",
+        basketProduct,
+      });
+
+    } catch (error) {
+       next(ApiError.internal(error.message));
+    }
   }
 }
 
