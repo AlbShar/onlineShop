@@ -10,3 +10,5 @@
 
 backup DB:
 /Library/PostgreSQL/15/bin/pg_dump -U postgres -h localhost -p 5433  -d onlineshop -F c -f /Users/Albert/Desktop/programming/onlineShop/server/backup.sql
+
+psql -U postgres -h localhost -d onlineshop -f "C:\Frontend\2023\onlineShop\server\db\backup.sql"

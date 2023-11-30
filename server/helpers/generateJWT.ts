@@ -3,7 +3,7 @@ const jsonWebToken = require("jsonwebtoken");
 type JWT = {
     userId: number;
     email: string;
-    role: string
+    role: string;
 }
 
 export const generateJWT = ({userId, email, role}: JWT) => {

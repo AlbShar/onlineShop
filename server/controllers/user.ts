@@ -1,7 +1,8 @@
 import { ApiError } from "../error/apiError";
+import { generateJWT } from "../helpers/generateJWT";
+
 const { User, Basket } = require("../models/models");
 const bscrypt = require("bcrypt");
-const generateJWT = require("../helpers/generateJWT");
 
 import type { Request, Response, NextFunction } from "express";
 
@@ -35,20 +36,15 @@ class UserController {
     if (!comparePassword) {
         return next(ApiError.internal("Wrong password"))
     }
-    const token = generateJWT(user.id, email, user.role );
+    const token = generateJWT({ userId: user.id, email, role: user.role });
 
     return res.json({ token });
 
 
   }
 
-  async checkAuth(req: Request, res: Response, next: NextFunction) {
-    const query = req.query;
-
-    if (!query.id) {
-      return next(ApiError.badRequest("Нет ID"));
-    }
-    res.json(query);
+  async checkAuth(req: Request, res: Response) {
+    res.json({message: "Вы авторизованы"});
   }
 }
 
