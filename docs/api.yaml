@@ -1,0 +1,542 @@
+openapi: 3.0.3
+info:
+  title: onlineShop
+  version: 1.0.0
+  contact: {}
+servers:
+  - url: http://localhost
+paths:
+  /api/brand:
+    get:
+      tags:
+        - Brand
+      summary: Get brands
+      description: Get brands
+      operationId: getBrands
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Brand'          
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Brand'  
+
+    post:
+      tags:
+        - Brand
+      summary: Create brand
+      description: Create brand
+      operationId: createBrand
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Brand name
+            examples:
+              Create brand:
+                value:
+                  name: Brand name
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Brand'          
+            application/xml:
+              schema:
+                  $ref: '#/components/schemas/Brand'           
+  /api/product:
+    get:
+      tags:
+        - Product
+      summary: Get products
+      description: Get products
+      operationId: getProducts
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'          
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'  
+    post:
+      tags:
+        - Product
+      summary: Create product
+      description: Create product
+      operationId: createProduct
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                brandId:
+                  type: string
+                  example: '1'
+                img:
+                  type: string
+                  format: binary
+                name:
+                  type: string
+                  example: Leg
+                price:
+                  type: string
+                  example: '44'
+                typeId:
+                  type: string
+                  example: '1'
+                volume:
+                  type: string
+                  example: '50'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'          
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+  /api/type:
+    get:
+      tags:
+        - Type
+      summary: Get types
+      description: Get types
+      operationId: getTypes
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Type'          
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Type'
+    post:
+      tags:
+        - Type
+      summary: Create type
+      description: Create type
+      operationId: createType
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Крем для ног
+            examples:
+              Create type:
+                value:
+                  name: Крем для ног
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Type'          
+            application/xml:
+              schema:
+                  $ref: '#/components/schemas/Type'
+  /api/user/registration:
+    post:
+      tags:
+        - User
+      summary: Registration
+      description: Registration
+      operationId: registration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: akhdasd@mail.ru
+                password:
+                  type: string
+                  example: hfffjfskg
+                role:
+                  type: string
+                  example: ADMIN
+            examples:
+              Registration:
+                value:
+                  email: akhdasd@mail.ru
+                  password: hfffjfskg
+                  role: ADMIN
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Token'          
+            application/xml:
+              schema:
+                  $ref: '#/components/schemas/Token'
+  /api/user/login:
+    post:
+      tags:
+        - User
+      summary: Login
+      description: Login
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: al239@gmail.ru
+                password:
+                  type: string
+                  example: hfffjfkjjskg
+            examples:
+              Login:
+                value:
+                  email: al239@gmail.ru
+                  password: hfffjfkjjskg
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Token'          
+            application/xml:
+              schema:
+                  $ref: '#/components/schemas/Token'
+  /api/user/auth:
+    get:
+      tags:
+        - User
+      summary: CheckAuth
+      description: CheckAuth
+      operationId: checkauth
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Token'          
+            application/xml:
+              schema:
+                  $ref: '#/components/schemas/Token'
+  /api/basket:
+    get:
+      tags:
+        - Basket
+      summary: Get products at basket
+      description: Get products at basket
+      operationId: getProductsAtBasket
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:              
+                  $ref: '#/components/schemas/BasketProduct'          
+            application/xml:
+              schema:
+                type: array
+                items:              
+                  $ref: '#/components/schemas/BasketProduct'
+    post:
+      tags:
+        - Basket
+      summary: Add product to basket
+      description: Add product to basket
+      operationId: addProductToBasket
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  example: '20'
+            examples:
+              Add product to basket:
+                value:
+                  id: '20'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/BasketProduct'          
+            application/xml:
+              schema:
+                  $ref: '#/components/schemas/BasketProduct'          
+    delete:
+      tags:
+        - Basket
+      summary: Delete product from basket
+      description: Delete product from basket
+      operationId: deleteProductFromBasket
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: string
+            example: '20'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Message'          
+            application/xml:
+              schema:
+                  $ref: '#/components/schemas/Message' 
+          
+  /api/rating:
+    post:
+      tags:
+        - Rating
+      summary: Set rating
+      description: Set rating
+      operationId: setRating
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  example: '20'
+                rating:
+                  type: string
+                  example: '4'
+            examples:
+              Set rating:
+                value:
+                  id: '20'
+                  rating: '4'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/RatingObject'          
+            application/xml:
+              schema:
+                  $ref: '#/components/schemas/RatingObject' 
+tags:
+  - name: Brand
+  - name: Product
+  - name: Type
+  - name: User
+  - name: Basket
+  - name: Rating
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        email:
+          type: string
+          example: user@example.com
+        password:
+          type: string
+          example: password123
+        role:
+          type: string
+          example: USER
+      required:
+        - email
+        - password
+
+    Basket:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+
+    BasketProduct:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        productId:
+          type: integer
+          format: int64
+          example: 18
+        basketId:
+          type: integer
+          format: int64
+          example: 6
+
+    Rating:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        productId:
+          type: integer
+          format: int64
+          example: 5
+        userId:
+          type: integer
+          format: int64
+          example: 18        
+        rating:
+          type: string
+          example: '5'
+
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: Product Name
+        price:
+          type: integer
+          example: 50
+        volume:
+          type: integer
+          example: 500
+        img:
+          type: string
+          example: product-image.jpg
+      required:
+        - name
+        - price
+        - volume
+        - img
+
+    Type:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: Type Name
+      required:
+        - name
+
+    Brand:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: Brand Name
+      required:
+        - name
+
+    ProductInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        title:
+          type: string
+          example: Info Title
+        description:
+          type: string
+          example: Info Description
+      required:
+        - title
+        - description
+
+    TypeBrand:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+          
+    Token:
+      type: object
+      properties:
+        token:
+          type: string
+          example: lgslkdjfslkdfjskldfjklsdjfsldkfjk4klfj
+          
+    Message:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Message with result
+
+    RatingObject:
+      type: object
+      properties:
+        rating:
+          $ref: '#/components/schemas/Rating'
+        message:
+          type: string
+          example: Рейтинг успешно добавлен
+
+
