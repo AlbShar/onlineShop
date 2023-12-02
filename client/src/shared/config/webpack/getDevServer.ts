@@ -1,5 +1,5 @@
 import path from "path";
-import type { OptionsWebpack } from "../../types/webpack/types";
+import type { OptionsWebpack } from "../../../../types/types";
 
 export const getDevServer = (optionsWebpack: OptionsWebpack) => {
   const {port, pathOutputPoint} = optionsWebpack;

@@ -1,10 +1,12 @@
+import path from "path";
 import { getDevServer } from "./getDevServer";
 import { getPlugins } from "./getPlugins";
 import { getLoaders } from "./getLoaders";
-import type { OptionsWebpack } from "../../types/webpack/types";
+
+import type { OptionsWebpack } from "types/types";
 
 
-export const getWebpackConfig = (optionsWebpack: OptionsWebpack) => {
+ export const getWebpackConfig = (optionsWebpack: OptionsWebpack) => {
     const {mode, port, pathEntryPoint, pathOutputPoint, srcPath} = optionsWebpack;
     let isDev = mode === 'development' ;
  
@@ -40,3 +42,4 @@ export const getWebpackConfig = (optionsWebpack: OptionsWebpack) => {
           
       };
 }
+

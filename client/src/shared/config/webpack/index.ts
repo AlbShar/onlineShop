@@ -1,0 +1,2 @@
+export {getWebpackConfig}  from "./getWebpackConfig";
+

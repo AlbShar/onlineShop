@@ -6,7 +6,7 @@ import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 import CopyPlugin from "copy-webpack-plugin";
 
-import type { OptionsWebpack } from "../../types/webpack/types";
+import type { OptionsWebpack } from "../../../../types/types";
 import path from "path";
 
 export const getPlugins = (optionsWebpack: OptionsWebpack): Configuration['plugins'] => {
