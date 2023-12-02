@@ -1,5 +1,4 @@
 import { ModuleOptions } from "webpack";
-import path from "path";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import ReactRefreshTypeScript from "react-refresh-typescript";
 
@@ -8,7 +7,7 @@ import type { OptionsWebpack } from "../../types/webpack/types";
 export const getLoaders = (
   optionsWebpack: OptionsWebpack
 ): ModuleOptions["rules"] => {
-  const { mode } = optionsWebpack;
+  const { mode} = optionsWebpack;
   const isDev = mode === "development";
 
   const assetsLoader = {
@@ -74,8 +73,10 @@ export const getLoaders = (
           
           {
             runtime: "automatic",
-          },]
+          },
+        ]
         ],
+
       },
     },
   };

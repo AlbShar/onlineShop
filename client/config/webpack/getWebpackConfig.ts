@@ -32,7 +32,7 @@ export const getWebpackConfig = (optionsWebpack: OptionsWebpack) => {
           // указывается список расширений которые мы можем использовать в наших файлах
           extensions: [".tsx", ".ts", ".js"],
           alias: {
-            '@': srcPath,
+            "~": srcPath,
           },
         },
         devServer: isDev

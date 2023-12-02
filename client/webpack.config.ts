@@ -9,6 +9,7 @@ export default (env: EnvType) => {
   const pathIndexFile = path.resolve(__dirname, "public", "index.html");
   const srcPath = path.resolve(__dirname, 'src');
   const publicPath = path.resolve(__dirname, "public");
+  console.log('srcPath', srcPath)
   const optionsWebpack = {
     pathEntryPoint,
     mode: env.mode ?? 'development',

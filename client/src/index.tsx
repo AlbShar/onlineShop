@@ -1,12 +1,15 @@
-import { App } from "@/components/App";
-import { Shop } from "@/pages/shop";
-import { About } from "@/pages/about";
+import { App } from '~/app';
+import { Home } from "~/pages/home";
+import { About } from "~/pages/about";
+import { Basket } from '~/pages/basket';
+import { Admin } from '~/pages/admin';
+import { ProductItem } from '~/pages/productItem';
+
 import ReactDOM from "react-dom/client";
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import { Suspense } from "react";
 
 const router = createBrowserRouter([
   {
@@ -15,11 +18,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/about",
-        element: <Suspense fallback={"Loading..."}><About/></Suspense>,
+        element: <About/>,
       },
       {
-        path: "/shop",
-        element: <Suspense fallback={"Loading..."}><Shop/></Suspense>,
+        path: "/home",
+        element: <Home/>,
+      },
+      {
+        path: "/Basket",
+        element: <Basket/>,
+      },
+      {
+        path: "/admin",
+        element: <Admin/>,
       },
     ],
   },

@@ -1,1 +1,1 @@
-export {AboutLazy as About} from "./aboutLazy";
+export {About} from "./about";

@@ -1,9 +1,9 @@
 import React from 'react';
 
-export const About = () => {
+export const Admin = () => {
     return (
         <div>
-            ABOUT
+            admin
         </div>
     );
 };
