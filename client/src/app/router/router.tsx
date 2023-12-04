@@ -1,21 +1,17 @@
-import { Routes, Route, BrowserRouter } from "react-router-dom";
-
-import { Home } from "~/pages/home";
-import { About } from "~/pages/about";
-import { Admin } from "~/pages/admin";
-import { Basket } from "~/pages/basket";
-import { ProductItem } from "~/pages/productItem";
+import { Route,  Routes as ReactRouters } from "react-router-dom";
+import { authRoutes, publicRoutes } from "./routes";
 
 export const MyRoutes = () => {
+  const isAuth = false;
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/basket" element={<Basket />} />
-        <Route path="/product/:id" element={<ProductItem />} />
-      </Routes>
-    </>
+    <ReactRouters>
+      {isAuth &&
+        authRoutes.map(({ path, Component }) => (
+          <Route key={path} path={path} element={Component} />
+        ))}
+      {publicRoutes.map(({ path, Component }) => (
+        <Route key={path} path={path} element={Component} />
+      ))}
+    </ReactRouters>
   );
 };
