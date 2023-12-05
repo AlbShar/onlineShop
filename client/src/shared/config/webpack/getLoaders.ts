@@ -27,7 +27,7 @@ export const getLoaders = (
   const sassLoader = {
     test: /\.s[ac]ss$/i,
     use: [
-      // Creates `style` nodes from JS strings, в dev режиме
+      // Creates `style` nodes from JS strings, в dev режиме, style loaders uses for global styles
       MiniCssExtractPlugin.loader,
       // Translates CSS into CommonJS
       cssLoaderWithModules,

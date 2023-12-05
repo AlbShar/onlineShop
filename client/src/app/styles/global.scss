@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@400;500&family=Raleway:wght@500&display=swap");
+
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background-color: var(--color-white2);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+:root {
+  --color-gray1: #9a9da0;
+  --color-gray2: #cdcdcd;
+  --color-gray3: #b3bac1;
+  --color-gray4: #959595;
+  --color-gray5: #d1d1d1;
+
+  --color-white1: #f4f1ed;
+  --color-white2: #f8f8f6;
+  --color-white3: #dbdce0;
+  --color-white4: #f9f7f6;
+
+  --color-dark: #122947;
+}

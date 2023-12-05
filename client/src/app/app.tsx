@@ -1,5 +1,5 @@
 import { Outlet, Link } from "react-router-dom";
-import classes from "./atyles/App.module.scss";
+import "./styles/global.scss";
 import { withProviders } from "./providers";
 import { MyRoutes } from "./router";
 

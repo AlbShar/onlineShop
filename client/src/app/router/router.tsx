@@ -1,8 +1,11 @@
 import { Route,  Routes as ReactRouters } from "react-router-dom";
+import { useSelector } from "react-redux";
+import type { RootState } from "~/app/store";
 import { authRoutes, publicRoutes } from "./routes";
 
+
 export const MyRoutes = () => {
-  const isAuth = false;
+  const isAuth = useSelector((state: RootState) => state.authReducer.isAuth);
   return (
     <ReactRouters>
       {isAuth &&
