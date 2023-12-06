@@ -1,10 +1,11 @@
 import React from 'react';
+import { SignIn } from '~/widgets/signIn';
 
 export const Auth = () => {
     return (
-        <div>
-            Auth
-        </div>
+        <>
+            <SignIn/>
+        </>
     );
 };
 
