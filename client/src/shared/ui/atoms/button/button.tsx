@@ -6,12 +6,5 @@ type Button = {
 };
 
 export const Button: FC<Button> = ({ children }) => {
-  return (
-    <MuiButton
-      variant="outlined"
-      sx={{ bgcolor: "ochre.dark"}}
-    >
-      {children}
-    </MuiButton>
-  );
+  return <MuiButton variant="main">{children}</MuiButton>;
 };

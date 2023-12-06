@@ -11,6 +11,7 @@
     "allowSyntheticDefaultImports": true,
     // позволяет работать с пакетами, которые используют common js, как с обычными пакетами через import
     "esModuleInterop": true,
+    "downlevelIteration" : true,
     "baseUrl": ".", 
     "paths": {
       "~/*": ["./src/*"]
