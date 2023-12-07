@@ -1,1 +1,1 @@
-import { RadioButtonsGroup } from "./RadioButtonsGroup";
+export { RadioButtonsGroup } from "./RadioButtonsGroup";
