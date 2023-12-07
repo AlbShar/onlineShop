@@ -56,11 +56,28 @@ export const theme = createTheme({
             },
             textTransform: "none",
             "@media (min-width: 767.7px)": {
-              fontSize: "1rem", // Измените размер шрифта для экранов шириной 600 пикселей и более
+              fontSize: "1rem",
             },
           },
         },
       ],
+    },
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          fontSize: "1.125rem",
+          color: palette.black.main,
+          fontWeight: 500,
+          fontFamily: '"M PLUS 1p", sans-serif',
+        },
+      },
+    },
+    MuiFormControlLabel: {
+      styleOverrides: {
+        root: {
+          color: palette.black.main,
+        },
+      },
     },
   },
 });
