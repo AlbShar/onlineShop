@@ -2,10 +2,9 @@ import { Home } from "~/pages/home";
 import { About } from "~/pages/about";
 import { Admin } from "~/pages/admin";
 import { Basket } from "~/pages/basket";
-import { Registration } from "~/pages/registration";
+import { AuthPage } from "~/pages/auth";
 import { ProductItem } from "~/pages/productItem";
 import { ROUTES } from "~/shared/consts";
-import { Login } from "~/pages/login";
 
 export const authRoutes = [
   {
@@ -33,10 +32,10 @@ export const publicRoutes = [
   },
   {
     path: ROUTES.LOGIN,
-    Component: <Login />,
+    Component: <AuthPage />,
   },
   {
     path: ROUTES.REGISTRATION,
-    Component: <Registration />,
+    Component: <AuthPage />,
   },
 ];

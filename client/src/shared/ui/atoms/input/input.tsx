@@ -6,7 +6,7 @@ type Input = {
   autoComplete?: "username" | "email" | "password";
   fullWidth?: boolean;
   label: string;
-  autoFocus: boolean;
+  autoFocus?: boolean;
   margin: "dense" | "normal" | "none";
   type: "text" | "email" | "password";
 };

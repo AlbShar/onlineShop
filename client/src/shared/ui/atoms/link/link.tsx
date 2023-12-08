@@ -9,7 +9,7 @@ type Link = {
 export const Link = ({ to, children }: Link) => {
   return (
     <LinkRouter to={to}>
-      <MuiLink>{children}</MuiLink>
+      {children}
     </LinkRouter>
   );
 };
