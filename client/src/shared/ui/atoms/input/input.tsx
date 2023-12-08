@@ -7,27 +7,10 @@ type Input = {
   fullWidth: boolean;
   label: string;
   autoFocus: boolean;
-  margin:  "dense" | "normal" | "none";
+  margin: "dense" | "normal" | "none";
+  type: "text" | "email" | "password";
 };
 
-export function FieldInput({
-  required,
-  name,
-  autoComplete,
-  fullWidth,
-  label,
-  autoFocus,
-  margin,
-}: Input) {
-  return (
-    <TextField
-      margin={margin}
-      required={required}
-      fullWidth={fullWidth}
-      label={label}
-      name={name}
-      autoComplete={autoComplete}
-      autoFocus={autoFocus}
-    />
-  );
+export function FieldInput(props: Input) {
+  return <TextField {...props} />;
 }

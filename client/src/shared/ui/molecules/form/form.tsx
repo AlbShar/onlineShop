@@ -10,19 +10,21 @@ type Form = {
 export function Form({ children }: Form) {
   return (
     <>
-      <Container component="form" maxWidth="sm">
+      <Container>
       <CssBaseline />
         <Box
           sx={{
-            paddingTop: 8,
-            alignItems: "center",
+            paddingTop: 2,
+            alignItems: "flex-start",
             display: "flex",
             flexDirection: "column",
-            bgcolor: "#cfe8fc",
             height: "100vh",
+            maxWidth: '500px',
+            margin: "0 auto"
           }}
         >
           {children}
+          
         </Box>
       </Container>
     </>
