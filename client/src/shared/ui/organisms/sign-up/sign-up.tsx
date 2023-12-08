@@ -8,12 +8,30 @@ import { BoxWrapper } from "~/shared/ui/molecules/box";
 
 import Box from "@mui/system/Box";
 
-export const FormSignIn = () => {
+export const SignUp = () => {
   return (
-    <Box sx={{paddingTop: 5}}>
-      <Typography variant="h1">Sign in</Typography>
+    <Box sx={{ paddingTop: 5 }}>
+      <Typography variant="h1">Sign up</Typography>
       <Form>
         <>
+          <BoxWrapper>
+            <FieldInput
+              label="First Name"
+              margin="normal"
+              name="First Name"
+              required
+              autoFocus
+              type="text"
+            />
+            <FieldInput
+              label="Last Name"
+              margin="normal"
+              name="Last Name"
+              required
+              autoFocus
+              type="text"
+            />
+          </BoxWrapper>
           <FieldInput
             label="email"
             margin="normal"
@@ -35,15 +53,9 @@ export const FormSignIn = () => {
             type="password"
           />
         </>
-        <Checkbox label="Remember me" />
-        <ButtonSubmit>Sing in</ButtonSubmit>
-        <BoxWrapper>
-          <>
-          <Link to="/forgot">Forgot Password?</Link>
-          <Link to="/registration">Don't have an account? Sign Up</Link>
-          </>
-        </BoxWrapper>
-
+        <Checkbox label="I want to receive inspiration, marketing promotions and updates via email." />
+        <ButtonSubmit>Sing up</ButtonSubmit>
+        <Link to="/login">Already have an account? Sign in</Link>
       </Form>
     </Box>
   );
