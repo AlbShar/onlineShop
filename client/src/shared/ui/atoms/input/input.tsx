@@ -1,3 +1,4 @@
+import React, {RefObject} from "react";
 import TextField from "@mui/material/TextField";
 
 type Input = {
@@ -9,6 +10,11 @@ type Input = {
   autoFocus?: boolean;
   margin: "dense" | "normal" | "none";
   type: "text" | "email" | "password";
+  onBlur?: () => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  checked?: boolean;
+  value?: any;
+  inputRef?: RefObject<HTMLInputElement> | ((instance: HTMLInputElement | null) => void)
 };
 
 export function FieldInput(props: Input) {
