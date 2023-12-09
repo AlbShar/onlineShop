@@ -3,8 +3,8 @@ import TextField from "@mui/material/TextField";
 
 type Input = {
   required: boolean;
-  name: "username" | "email" | "password" | "firstName" | "lastName";
-  autoComplete?: "username" | "email" | "password";
+  name: "userName" | "email" | "password" ;
+  autoComplete?: "userName" | "email" | "password";
   fullWidth?: boolean;
   label: string;
   autoFocus?: boolean;

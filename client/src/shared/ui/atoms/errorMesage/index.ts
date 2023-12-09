@@ -1,0 +1,1 @@
+export {ErrorMessageCustom} from "./errorMessage";

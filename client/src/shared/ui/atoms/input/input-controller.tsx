@@ -4,12 +4,11 @@ import { FieldInput } from "./input";
 interface FormInputs<T extends "registration" | "login" = 'registration' > {
   email: string;
   password: string;
-  firstName: T extends "registration" ? string : never;
-  lastName: T extends "registration" ? string : never;
+  userName: T extends "registration" ? string : never;
 }
 
 type InputController = {
-  name: "email" | "username" | "password" | "firstName" | "lastName";
+  name: "email" | "userName" | "password" ;
   control: Control<FormInputs>;
   isLoginPage: boolean;
   rules: object;
@@ -34,6 +33,7 @@ export const InputController = ({
           label={name}
           margin="normal"
           required
+          fullWidth
           autoFocus={!isLoginPage}
           type={type}
           onChange={onChange} 
