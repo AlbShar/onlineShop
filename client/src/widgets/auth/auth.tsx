@@ -7,21 +7,21 @@ import { Checkbox } from "~/shared/ui/atoms/checkbox";
 import { ButtonSubmit } from "~/shared/ui/atoms/button";
 import { Link } from "~/shared/ui/atoms/link";
 import { BoxWrapper } from "~/shared/ui/molecules/box";
-import { useForm } from "react-hook-form";
-
+import { useForm, SubmitHandler } from "react-hook-form";
 import Box from "@mui/system/Box";
+import { ErrorMessage } from "@hookform/error-message";
+import { useEffect } from "react";
+
+interface FormInputs<T extends "registration" | "login"> {
+  email: string;
+  password: string;
+  firstName: T extends "registration" ? string : never;
+  lastName: T extends "registration" ? string : never;
+}
 
 export const Auth = () => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-    control,
-  } = useForm();
-
   const { pathname } = useLocation(),
-    path = pathname.slice(1),
+    path = pathname.slice(1) as "registration" | "login",
     isLoginPage = path === "login",
     title = isLoginPage ? "Sign in" : "Sign up",
     linkText = isLoginPage
@@ -31,59 +31,134 @@ export const Auth = () => {
       ? "Remember me"
       : "I want to receive inspiration, marketing promotions and updates via email",
     linkTo = isLoginPage ? "/registration" : "/login";
+  const {
+    handleSubmit,
+    formState: { errors },
+    reset,
+    getValues,
+    resetField,
+    control,
+  } = useForm<FormInputs<typeof path>>({
+    mode: "onChange",
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: ""
+    }
+  });
+  const onSubmit: SubmitHandler<FormInputs<typeof path>>  = (data: FormInputs<typeof path>) => {
+    console.log(data);
+    reset();
+  };
+
+
 
   return (
     <Box sx={{ paddingTop: 5 }}>
       <Typography variant="h1">{title}</Typography>
-      <Form>
-        <>
-          {isLoginPage ? (
-            false
-          ) : (
-            <BoxWrapper>
-              <InputController
-                control={control}
-                name="First Name"
-                isLoginPage={isLoginPage}
-                rules={{ required: true }}
-              />
-              <InputController
-                control={control}
-                name="Last Name"
-                isLoginPage={isLoginPage}
-                rules={{ required: true }}
-              />
-            </BoxWrapper>
-          )}
-          <FieldInput
-            label="email"
-            margin="normal"
-            name="email"
-            required
-            autoFocus={isLoginPage}
-            fullWidth
-            autoComplete="email"
-            type="email"
-          />
-          <FieldInput
-            label="password"
-            margin="normal"
-            name="password"
-            required
-            fullWidth
-            autoComplete="password"
-            type="password"
-          />
-        </>
-        <Checkbox label={checkboxLabel} />
-        <ButtonSubmit>{title}</ButtonSubmit>
-        <BoxWrapper>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Form>
           <>
-            {isLoginPage ? <Link to="/forgot">Forgot Password?</Link> : false}
-            <Link to={linkTo}>{linkText}</Link>
+            {isLoginPage ? (
+              false
+            ) : (
+              <BoxWrapper>
+                <InputController
+                  control={control}
+                  name="firstName"
+                  isLoginPage={isLoginPage}
+                  rules={{
+                    minLength: { value: 3, message: "Min value - 3" },
+                    maxLength: { value: 14, message: "Max value - 15" },
+                  }}
+                  type="text"
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="firstName"
+                  render={({ message }) => (
+                    <p style={{ color: "red" }}>{message}</p>
+                  )}
+                />
+                <InputController
+                  control={control}
+                  name="lastName"
+                  isLoginPage={isLoginPage}
+                  rules={{
+                    minLength: { value: 3, message: "Min value - 3" },
+                    maxLength: { value: 14, message: "Max value - 15" },
+                  }}
+                  type="text"
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="lastName"
+                  render={({ message }) => (
+                    <p style={{ color: "red" }}>{message}</p>
+                  )}
+                />
+              </BoxWrapper>
+            )}
+            <InputController
+              control={control}
+              name="email"
+              isLoginPage={isLoginPage}
+              rules={{
+                minLength: { value: 3, message: "Min value - 3" },
+                maxLength: { value: 14, message: "Max value - 15" },
+              }}
+              type="email"
+            />
+
+            <ErrorMessage
+              errors={errors}
+              name="email"
+              render={({ message }) => (
+                <p style={{ color: "red" }}>{message}</p>
+              )}
+            />
+            <InputController
+              control={control}
+              name="password"
+              isLoginPage={isLoginPage}
+              rules={{
+                minLength: { value: 3, message: "Min value - 3" },
+                maxLength: { value: 14, message: "Max value - 15" },
+              }}
+              type="password"
+            />
+            <ErrorMessage
+              errors={errors}
+              name="password"
+              render={({ message }) => (
+                <p style={{ color: "red" }}>{message}</p>
+              )}
+            />
           </>
-        </BoxWrapper>
-      </Form>
+          <Checkbox label={checkboxLabel} />
+          <ButtonSubmit>{title}</ButtonSubmit>
+          <BoxWrapper>
+            <>
+              {isLoginPage ? <Link to="/forgot">Forgot Password?</Link> : false}
+              <Link
+                to={linkTo}
+                onClick={() => {
+                  if (path === 'registration') {
+                    resetField("lastName");
+                    resetField("firstName");
+                  }
+                }}
+                
+                
+                
+              >
+                {linkText}
+              </Link>
+            </>
+          </BoxWrapper>
+        </Form>
+      </form>
     </Box>
   );
 };

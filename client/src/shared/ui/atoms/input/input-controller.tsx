@@ -1,12 +1,19 @@
 import { Controller, Control } from "react-hook-form";
 import { FieldInput } from "./input";
-import { ObjectBindingOrAssignmentElement } from "typescript";
+
+interface FormInputs<T extends "registration" | "login" = 'registration' > {
+  email: string;
+  password: string;
+  firstName: T extends "registration" ? string : never;
+  lastName: T extends "registration" ? string : never;
+}
 
 type InputController = {
-  name: "email" | "username" | "password" | "First Name" | "Last Name";
-  control: Control;
+  name: "email" | "username" | "password" | "firstName" | "lastName";
+  control: Control<FormInputs>;
   isLoginPage: boolean;
   rules: object;
+  type: 'text' | 'email' | 'password';
 };
 
 export const InputController = ({
@@ -14,28 +21,25 @@ export const InputController = ({
   control,
   isLoginPage,
   rules,
+  type
 }: InputController) => {
   return (
     <Controller
       control={control}
+      //@ts-ignore
       name={name}
       rules={rules}
-      render={({
-        field: { onChange, onBlur, value, name, ref },
-        fieldState: { invalid, isTouched, isDirty, error },
-        formState,
-      }) => (
+      render={({ field: { onChange, onBlur, value, ref } }) => (
         <FieldInput
           label={name}
           margin="normal"
-          name={name}
           required
           autoFocus={!isLoginPage}
-          type="text"
-          onBlur={onBlur}
-          onChange={onChange}
+          type={type}
+          onChange={onChange} 
+          onBlur={onBlur} 
+          name={name}
           value={value}
-          inputRef={ref}
         />
       )}
     />

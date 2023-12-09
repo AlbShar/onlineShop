@@ -4,11 +4,12 @@ import MuiLink from "@mui/material/Link";
 type Link = {
   to: string;
   children: string;
+  onClick?: () => void
 };
 
-export const Link = ({ to, children }: Link) => {
+export const Link = ({ to, children, onClick }: Link) => {
   return (
-    <LinkRouter to={to}>
+    <LinkRouter to={to} onClick={onClick}>
       {children}
     </LinkRouter>
   );

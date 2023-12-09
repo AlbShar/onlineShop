@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 
 type Input = {
   required: boolean;
-  name: "username" | "email" | "password" | "First Name" | "Last Name";
+  name: "username" | "email" | "password" | "firstName" | "lastName";
   autoComplete?: "username" | "email" | "password";
   fullWidth?: boolean;
   label: string;
@@ -13,7 +13,7 @@ type Input = {
   onBlur?: () => void;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   checked?: boolean;
-  value?: any;
+  value: string;
   inputRef?: RefObject<HTMLInputElement> | ((instance: HTMLInputElement | null) => void)
 };
 
