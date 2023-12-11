@@ -25,19 +25,30 @@ type CutsomFieldsInput = {
   type: TypeInput;
 };
 
-
-
 export type FieldsInput = CutsomFieldsInput & AutoFieldsInputs;
+
+interface CommonLoginBody {
+  email: string;
+  password: string;
+};
+
+export interface RegistrationBody extends CommonLoginBody {
+  username: string;
+}
+
+export interface LoginBody extends CommonLoginBody {
+  username?: never;
+}
 export interface FormInputs<T extends "registration" | "login" > {
   email: string;
   password: string;
   username: T extends "registration" ? string : never;
 }
-export type LoginBody = {
-  login: string;
-  password: string;
-  remember?: boolean;
+
+export type Response = {
+  token: string;
 };
+
 export interface TInputController<T extends "registration" | "login" = 'registration'> {
   name: NameInput;
   control: Control<FormInputs<T>>;

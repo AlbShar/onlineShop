@@ -13,13 +13,11 @@ import { ErrorMessage } from "@hookform/error-message";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import { registration, login } from "~/features/auth/api/auth";
-import { FormInputs } from "~/shared/api/auth/";
-
-
+import { RegistrationBody, LoginBody, Response } from "~/shared/api/auth/";
 
 export const Auth = () => {
   const { pathname } = useLocation(),
-    path = pathname.slice(1) as "registration" | "login",
+    path = pathname.slice(1),
     isLoginPage = path === "login",
     title = isLoginPage ? "Sign in" : "Sign up",
     linkText = isLoginPage
@@ -30,13 +28,15 @@ export const Auth = () => {
       : "I want to receive inspiration, marketing promotions and updates via email",
     linkTo = isLoginPage ? "/registration" : "/login";
 
-   const [isUserAuth, setIsUserAuth] = useState<boolean | null>(null);
+  type TData = typeof path extends "login" ? LoginBody : RegistrationBody;
 
-   useEffect(() => {
+  const [isUserAuth, setIsUserAuth] = useState<boolean | null>(null);
+
+  useEffect(() => {
     if (isUserAuth === false) {
-      setTimeout(() => setIsUserAuth(null), 5000)
+      setTimeout(() => setIsUserAuth(null), 5000);
     }
-   }, [isUserAuth])
+  }, [isUserAuth]);
 
   const {
     handleSubmit,
@@ -44,7 +44,7 @@ export const Auth = () => {
     reset,
     resetField,
     control,
-  } = useForm<FormInputs<typeof path>>({
+  } = useForm<TData>({
     mode: "onChange",
     defaultValues: {
       username: "",
@@ -53,18 +53,24 @@ export const Auth = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<FormInputs<typeof path>> = async (
-    data: FormInputs<typeof path>
-  ) => {
+  const onSubmit: SubmitHandler<TData> = async (data: TData) => {
+    console.log(data)
     try {
-     const response = await login(data);
-     if (!response) {
-      setIsUserAuth(false)
-     } else {
-      reset();
-     }
+      const response = await (path === "login"
+        ? login({
+            email: data.email,
+            password: data.password,
+          })
+        : registration(data));
+
+      if (!response) {
+        setIsUserAuth(false);
+      } else {
+        console.log(response);
+        reset();
+      }
     } catch (error) {
-      console.log("ERROR", error)
+      console.log("ERROR", error);
     }
   };
 
@@ -157,7 +163,14 @@ export const Auth = () => {
             >
               <Checkbox label={checkboxLabel} />
             </div>
-            {isUserAuth === false ? <ErrorMessageCustom>Пользователя с таким e-mail не существует или введен неверный пароль</ErrorMessageCustom> : false}
+            {isUserAuth === false ? (
+              <ErrorMessageCustom>
+                Пользователя с таким e-mail не существует или введен неверный
+                пароль
+              </ErrorMessageCustom>
+            ) : (
+              false
+            )}
             <ButtonSubmit>{title}</ButtonSubmit>
             <BoxWrapper>
               <>

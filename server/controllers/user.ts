@@ -16,7 +16,7 @@ interface RequestUser extends Request {
 
 class UserController {
   async registration(req: Request, res: Response) {
-    const { email, password, role } = req.body;
+    const { email, password, role, username } = req.body;
 
     const candidate = await User.findOne({ where: { email } });
 
@@ -24,7 +24,7 @@ class UserController {
       return ApiError.badRequest("Такая почта уже существует");
     }
     const hash = await bscrypt.hash(password, 5);
-    const user = await User.create({ email, password: hash });
+    const user = await User.create({ email, password: hash, username, role });
     const basket = await Basket.create({ userId: user.Id });
     const token = generateJWT({userId: user.id, email, role});
 
@@ -36,18 +36,12 @@ class UserController {
     const user = await User.findOne({where: {email}});
     const comparePassword = bscrypt.compareSync(password, user.password);
 
-    if (!user) {
-        return next(ApiError.unauthorized("Пользователь не найден"))
-    }
-
-    if (!comparePassword) {
-        return next(ApiError.internal("Пользователя с таким e-mail не существует или введен неверный пароль"))
+    if (!user && !comparePassword) {
+      return next(ApiError.unauthorized("Пользователя с таким e-mail не существует или введен неверный пароль"))
     }
     const token = generateJWT({ userId: user.id, email, role: user.role });
 
     return res.json({ token });
-
-
   }
 
   async checkAuth(req: RequestUser, res: Response) {
