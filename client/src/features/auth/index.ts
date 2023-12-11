@@ -1,1 +1,1 @@
-export { setAuth, reducer as authReducer } from "./authSlice";
+export { setAuth, reducer as authReducer } from "./model/authSlice";

@@ -12,11 +12,13 @@ import { ErrorMessage } from "@hookform/error-message";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 
-interface FormInputs<T extends "registration" | "login"> {
-  email: string;
-  password: string;
-  userName: T extends "registration" ? string : never;
-}
+import { FormInputs } from "~/shared/api/auth/";
+
+// interface FormInputs<T extends "registration" | "login"> {
+//   email: string;
+//   password: string;
+//   username: T extends "registration" ? string : never;
+// }
 
 export const Auth = () => {
   const { pathname } = useLocation(),
@@ -40,7 +42,7 @@ export const Auth = () => {
   } = useForm<FormInputs<typeof path>>({
     mode: "onChange",
     defaultValues: {
-      userName: "",
+      username: "",
       email: "",
       password: "",
     },
@@ -76,17 +78,18 @@ export const Auth = () => {
                 <>
                   <InputController
                     control={control}
-                    name="userName"
+                    name="username"
                     isLoginPage={isLoginPage}
                     rules={{
                       minLength: { value: 3, message: "Min value - 3" },
                       maxLength: { value: 14, message: "Max value - 15" },
                     }}
+                    autoComplete="username"
                     type="text"
                   />
                   <ErrorMessage
                     errors={errors}
-                    name="userName"
+                    name="username"
                     render={({ message }) => (
                       <ErrorMessageCustom>{message}</ErrorMessageCustom>
                     )}
@@ -102,6 +105,7 @@ export const Auth = () => {
                   maxLength: { value: 14, message: "Max value - 15" },
                 }}
                 type="email"
+                autoComplete="email"
               />
 
               <ErrorMessage
@@ -120,6 +124,7 @@ export const Auth = () => {
                   maxLength: { value: 14, message: "Max value - 15" },
                 }}
                 type="password"
+                autoComplete="password"
               />
               <ErrorMessage
                 errors={errors}
@@ -150,7 +155,7 @@ export const Auth = () => {
                   to={linkTo}
                   onClick={() => {
                     if (path === "registration") {
-                      resetField("userName");
+                      resetField("username");
                     }
                   }}
                 >
