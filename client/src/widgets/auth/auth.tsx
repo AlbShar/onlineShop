@@ -11,14 +11,10 @@ import Box from "@mui/system/Box";
 import { ErrorMessage } from "@hookform/error-message";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
-
+import { registration, login } from "~/features/auth/api/auth";
 import { FormInputs } from "~/shared/api/auth/";
 
-// interface FormInputs<T extends "registration" | "login"> {
-//   email: string;
-//   password: string;
-//   username: T extends "registration" ? string : never;
-// }
+
 
 export const Auth = () => {
   const { pathname } = useLocation(),
@@ -32,6 +28,9 @@ export const Auth = () => {
       ? "Remember me"
       : "I want to receive inspiration, marketing promotions and updates via email",
     linkTo = isLoginPage ? "/registration" : "/login";
+    console.log(process.env.URL)
+
+   
 
   const {
     handleSubmit,
@@ -51,6 +50,12 @@ export const Auth = () => {
     data: FormInputs<typeof path>
   ) => {
     console.log(data);
+
+    if (path === 'registration') {
+      registration(data);
+    } else {
+      login(data)
+    }
     reset();
   };
 

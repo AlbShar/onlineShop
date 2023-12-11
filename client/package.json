@@ -7,7 +7,7 @@
     "build:dev": "webpack --env mode=development",
     "build:prod": "webpack --env mode=production",
     "build:prod_analyzer": "webpack --env mode=production isAnalyzer=true",
-    "start": "webpack serve --env mode=development"
+    "start": "webpack serve --env port=8080 mode=development"
   },
   "keywords": [],
   "author": "",
@@ -28,6 +28,7 @@
     "babel-plugin-module-resolver": "^5.0.0",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
+    "dotenv-webpack": "^8.0.1",
     "fork-ts-checker-webpack-plugin": "^9.0.0",
     "html-webpack-plugin": "^5.5.3",
     "mini-css-extract-plugin": "^2.7.6",

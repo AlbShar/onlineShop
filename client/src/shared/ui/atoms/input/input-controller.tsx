@@ -1,23 +1,8 @@
-import {FC} from "react";
-import { Controller, Control } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { FieldInput } from "./input";
 
-import { FormInputs, TInputController } from "~/shared/api/auth/";
+import { TInputController } from "~/shared/api/auth/";
 
-// interface FormInputs<T extends "registration" | "login" = 'registration' > {
-//   email: string;
-//   password: string;
-//   username: T extends "registration" ? string : never;
-// }
-
-// type InputController = {
-//   name: "email" | "username" | "password";
-//   control: Control<FormInputs>;
-//   isLoginPage: boolean;
-//   rules: object;
-//   type: "text" | "email" | "password";
-//   autoComplete: "username" | "email" | "password";
-// };
 
 export const InputController = ({
   name,

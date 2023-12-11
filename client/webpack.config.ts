@@ -11,13 +11,13 @@ export default (env: EnvType) => {
   const publicPath = path.resolve(__dirname, "public");
   const optionsWebpack = {
     pathEntryPoint,
-    mode: env.mode ?? 'development',
-    port: env.port ?? 5000,
+    mode: env.mode ?? "development",
+    port: env.port ?? 8080,
     pathOutputPoint,
     pathIndexFile,
     isAnalyzer: env.isAnalyzer,
     srcPath,
-    publicPath
+    publicPath,
   };
   const config: webpack.Configuration = getWebpackConfig(optionsWebpack);
 

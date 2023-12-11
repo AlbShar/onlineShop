@@ -5,7 +5,7 @@ import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 import CopyPlugin from "copy-webpack-plugin";
-
+const Dotenv = require("dotenv-webpack");
 import type { OptionsWebpack } from "../../../../types/types";
 import path from "path";
 
@@ -16,23 +16,29 @@ export const getPlugins = (optionsWebpack: OptionsWebpack): Configuration['plugi
 
 
     return [
-        new HtmlWebpackPlugin({
-          template: pathIndexFile,
-          favicon: path.resolve(publicPath, "favicon.ico")
-        }),
-        new MiniCssExtractPlugin({
-         filename: 'styles/styles[contenthash].css'
-        }),
-        isDev && new webpack.ProgressPlugin() ,
-        (isProd && isAnalyzer) && new BundleAnalyzerPlugin(),
-        // этот плагин выносит в отдельный поток проверку типов TS, тем самым уменьшая время сборки webpack
-        isDev ? new ForkTsCheckerWebpackPlugin() : undefined,
-        // этот плагин позволяет не перезагружать страницу при изменении кода
-        isDev && new ReactRefreshWebpackPlugin(),
-        isProd && new CopyPlugin({
+      new HtmlWebpackPlugin({
+        template: pathIndexFile,
+        favicon: path.resolve(publicPath, "favicon.ico"),
+      }),
+      new MiniCssExtractPlugin({
+        filename: "styles/styles[contenthash].css",
+      }),
+      // идля использования глобальных переменных в файле .env
+      isDev && new Dotenv(),
+      isDev && new webpack.ProgressPlugin(),
+      isProd && isAnalyzer && new BundleAnalyzerPlugin(),
+      // этот плагин выносит в отдельный поток проверку типов TS, тем самым уменьшая время сборки webpack
+      isDev ? new ForkTsCheckerWebpackPlugin() : undefined,
+      // этот плагин позволяет не перезагружать страницу при изменении кода
+      isDev && new ReactRefreshWebpackPlugin(),
+      isProd &&
+        new CopyPlugin({
           patterns: [
-            { from: path.resolve(srcPath, "assets", "locales"), to: path.resolve(pathOutputPoint, 'assets', 'locales') },
+            {
+              from: path.resolve(srcPath, "assets", "locales"),
+              to: path.resolve(pathOutputPoint, "assets", "locales"),
+            },
           ],
         }),
-      ].filter(Boolean)
+    ].filter(Boolean);
 }
