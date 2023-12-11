@@ -34,14 +34,14 @@ class UserController {
   async login(req: Request, res: Response, next: NextFunction) {
     const {email, password} = req.body;
     const user = await User.findOne({where: {email}});
-
-    if (!user) {
-        return next(ApiError.internal("Пользователь с таким именем не найден"))
-    }
     const comparePassword = bscrypt.compareSync(password, user.password);
 
+    if (!user) {
+        return next(ApiError.unauthorized("Пользователь не найден"))
+    }
+
     if (!comparePassword) {
-        return next(ApiError.internal("Wrong password"))
+        return next(ApiError.internal("Пользователя с таким e-mail не существует или введен неверный пароль"))
     }
     const token = generateJWT({ userId: user.id, email, role: user.role });
 

@@ -1,4 +1,5 @@
 import { useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { ErrorMessageCustom } from "~/shared/ui/atoms/errorMesage";
 import { InputController } from "~/shared/ui/atoms/input";
 import { Typography } from "~/shared/ui/atoms/typography";
@@ -28,9 +29,14 @@ export const Auth = () => {
       ? "Remember me"
       : "I want to receive inspiration, marketing promotions and updates via email",
     linkTo = isLoginPage ? "/registration" : "/login";
-    console.log(process.env.URL)
 
-   
+   const [isUserAuth, setIsUserAuth] = useState<boolean | null>(null);
+
+   useEffect(() => {
+    if (isUserAuth === false) {
+      setTimeout(() => setIsUserAuth(null), 5000)
+    }
+   }, [isUserAuth])
 
   const {
     handleSubmit,
@@ -46,17 +52,20 @@ export const Auth = () => {
       password: "",
     },
   });
-  const onSubmit: SubmitHandler<FormInputs<typeof path>> = (
+
+  const onSubmit: SubmitHandler<FormInputs<typeof path>> = async (
     data: FormInputs<typeof path>
   ) => {
-    console.log(data);
-
-    if (path === 'registration') {
-      registration(data);
-    } else {
-      login(data)
+    try {
+     const response = await login(data);
+     if (!response) {
+      setIsUserAuth(false)
+     } else {
+      reset();
+     }
+    } catch (error) {
+      console.log("ERROR", error)
     }
-    reset();
   };
 
   return (
@@ -148,6 +157,7 @@ export const Auth = () => {
             >
               <Checkbox label={checkboxLabel} />
             </div>
+            {isUserAuth === false ? <ErrorMessageCustom>Пользователя с таким e-mail не существует или введен неверный пароль</ErrorMessageCustom> : false}
             <ButtonSubmit>{title}</ButtonSubmit>
             <BoxWrapper>
               <>

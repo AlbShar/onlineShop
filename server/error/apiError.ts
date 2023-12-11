@@ -18,5 +18,9 @@ export class ApiError extends Error {
         return new ApiError(403, message);
     }
 
+    static unauthorized(message: string) {
+        return new ApiError(402, message);
+    }
+
 }
 
