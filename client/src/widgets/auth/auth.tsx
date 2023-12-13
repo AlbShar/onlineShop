@@ -13,7 +13,20 @@ import { ErrorMessage } from "@hookform/error-message";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import { registration, login } from "~/features/auth/api/auth";
-import { RegistrationBody, LoginBody, Response } from "~/shared/api/auth/";
+import { RegistrationBody, LoginBody } from "~/shared/api/auth/";
+import { useCookie } from "~/shared/lib/use-cookie";
+
+
+type TOptions<T extends string | Date = string> = {
+  path: string;
+  expires: T extends Date ? Date : string;
+  "max-age": number;
+  domain: string;
+  secure: boolean;
+  sameSite: "none" | "strict" | "lax";
+  httpOnly: boolean;
+};
+
 
 export const Auth = () => {
   const { pathname } = useLocation(),
@@ -31,7 +44,7 @@ export const Auth = () => {
   type TData = typeof path extends "login" ? LoginBody : RegistrationBody;
 
   const [isUserAuth, setIsUserAuth] = useState<boolean | null>(null);
-
+  const [cookie, setCookie] = useCookie<string>("token");
   useEffect(() => {
     if (isUserAuth === false) {
       setTimeout(() => setIsUserAuth(null), 5000);
@@ -54,7 +67,6 @@ export const Auth = () => {
   });
 
   const onSubmit: SubmitHandler<TData> = async (data: TData) => {
-    console.log(data)
     try {
       const response = await (path === "login"
         ? login({
@@ -63,11 +75,13 @@ export const Auth = () => {
           })
         : registration(data));
 
-      if (!response) {
-        setIsUserAuth(false);
-      } else {
-        console.log(response);
+      if (response) {
+        const { token } = response;
+        const options: Partial<TOptions> = { httpOnly: true, secure: true, sameSite: "strict", path: '/'};
+        setCookie(token);
         reset();
+      } else {
+        setIsUserAuth(false);
       }
     } catch (error) {
       console.log("ERROR", error);
