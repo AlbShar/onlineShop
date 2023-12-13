@@ -37,7 +37,7 @@ class UserController {
     const comparePassword = bscrypt.compareSync(password, user.password);
 
     if (!user && !comparePassword) {
-      return next(ApiError.unauthorized("Пользователя с таким e-mail не существует или введен неверный пароль"))
+      return next(ApiError.unauthorized("Пользователя c таким e-mail не существует или введен неверный пароль"))
     }
     const token = generateJWT({ userId: user.id, email, role: user.role });
 
